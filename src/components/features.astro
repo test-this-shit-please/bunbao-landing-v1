@@ -1,19 +1,29 @@
 ---
 // @ts-ignore
 import { Icon } from "astro-icon";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { getLang } from "locales/getLang";
+const updates = await getCollection("updates");
+const updatesData = updates.map((update) => {
+  update.data.slug = update.slug;
+  return update.data;
+});
 
+const bunLogo = import("@/assets/logos/bun.svg");
+const lang = getLang();
 const features = [
+  ...updatesData,
   {
-    title: "Bring Your Own Framework",
-    description:
-      "Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.",
-    icon: "bx:bxs-briefcase",
+    title: "Elysia updated to 0.7",
+    description: "Ergonomic Framework for Humans",
+    icon: "mdi:web",
   },
   {
     title: "100% Static HTML, No JS",
     description:
       "Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.",
-    icon: "bx:bxs-window-alt",
+    icon: "bx:bx-dollar-circle",
   },
   {
     title: "On-Demand Components",
@@ -44,23 +54,29 @@ const features = [
 
 <div class="mt-16 md:mt-0">
   <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-    Everything you need to start a website
+    {lang.ecosystemUpdatesTitle}
   </h2>
   <p class="text-lg mt-4 text-slate-600">
-    Astro comes batteries included. It takes the best parts of state-of-the-art
-    tools and adds its own innovations.
+    Bun is developing very quickly, so we are collecting updates from the entire
+    ecosystem in one place to make it easier for you to track them
   </p>
 </div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
+<div class="grid sm:grid-cols-2 md:grid-cols-2 mt-16 gap-16">
   {
     features.map((item) => (
       <div class="flex gap-4 items-start">
         <div class="mt-1 bg-black rounded-full  p-2 w-8 h-8 shrink-0">
-          <Icon class="text-white" name={item.icon} />
+          {item.logo ? (
+            <Image src={bunLogo} alt="Project Logo" />
+          ) : (
+            <Icon class="text-white" name={item.icon} />
+          )}
         </div>
         <div>
-          <h3 class="font-semibold text-lg">{item.title}</h3>{" "}
+          <h3 class="font-semibold text-lg">
+            <a href={`/updates/${item.slug}`}>{item.title}</a>
+          </h3>
           <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
         </div>
       </div>

@@ -1,0 +1,10 @@
+import React from "react";
+
+export type ProtoLinkProps = {
+  href: string;
+  title: string;
+};
+
+const ProtoLink = ({ href, title }: ProtoLinkProps) => {
+  return <a href={href}>{title}</a>;
+};

@@ -3,50 +3,67 @@ import { Picture } from "astro:assets";
 import heroImage from "assets/hero.png";
 import Link from "@components/ui/link.astro";
 import { Icon } from "astro-icon";
+import { getCollection } from "astro:content";
+import { getLang } from "@/locales/getLang";
+
+const lang = getLang();
+const jobs = await getCollection("jobs");
 ---
 
-<main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
-  <div class="py-6 md:order-1 hidden md:block">
-    <Picture
-      src={heroImage}
-      alt="Astronaut in the air"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 800px) 100vw, 620px"
-      loading="eager"
-      format="avif"
-    />
+<main class="grid lg:grid-cols-2 pt-16 pb-8 md:pt-12 md:pb-24">
+  <div class="py-6 order-2 p-6 rounded md:block bg-red-100">
+    <h2 class="text-2xl mb-3">{lang.jobOpenings}</h2>
+
+    <!-- <div class="flex items-center justify-between mb-2">
+      <div>
+        <a href="#" class="text-blue-500">Job title</a>
+      </div>
+      <div class="bg-gray-800 px-2 rounded mr-4">
+        <h2 class="text-white">Company</h2>
+      </div>
+    </div> -->
+    {
+      jobs.map(({ slug, data }) => (
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <a href={`/jobs/${slug}`} class="text-blue-500">
+              {data.title}
+            </a>
+          </div>
+          <div class="bg-gray-800 px-2 rounded mr-4">
+            <h2 class="text-white">{data.company}</h2>
+          </div>
+        </div>
+      ))
+    }
   </div>
-  <div>
+  <div class="mb-6 lg:md: 0">
     <h1
       class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-      Marketing website done with Astro
+      Bun Deno Node
     </h1>
     <p class="text-lg mt-4 text-slate-600 max-w-xl">
-      Astroship is a starter template for startups, marketing websites & landing
-      pages.<wbr /> Built with Astro.build and TailwindCSS. You can quickly
-      create any website with this starter.
+      {lang.mantra}
     </p>
     <div class="mt-6 flex flex-col sm:flex-row gap-3">
       <Link
         href="#"
-        href="https://web3templates.com/templates/astroship-starter-website-template-for-astro"
+        href="/jobs"
         target="_blank"
         class="flex gap-1 items-center justify-center"
         rel="noopener">
         <Icon class="text-white w-5 h-5" name="bx:bxs-cloud-download" />
-
-         Download for Free
+        {lang.seeBdnJobs}
       </Link>
       <Link
         size="lg"
         style="outline"
         rel="noopener"
-        href="https://github.com/surjithctly/astroship"
+        href="https://t.me/@bunbao-project"
         class="flex gap-1 items-center justify-center"
         target="_blank">
         <Icon class="text-black w-4 h-4" name="bx:bxl-github" />
-         GitHub Repo
+        {lang.joinTelegram}
       </Link>
     </div>
   </div>

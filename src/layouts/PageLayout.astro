@@ -1,0 +1,26 @@
+---
+import Container from "@components/container.astro";
+import Layout from "./Layout.astro";
+import Sectionhead from "@components/sectionhead.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title}>
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">{title}</Fragment>
+      <Fragment slot="desc">
+        {description}
+      </Fragment>
+    </Sectionhead>
+    <main class="mt-16">
+      <slot />
+    </main>
+  </Container>
+</Layout>

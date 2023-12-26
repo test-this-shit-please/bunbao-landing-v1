@@ -18,7 +18,7 @@ const { frontmatter } = Astro.props;
       </h1>
       <div class="flex gap-2 mt-3 items-center flex-wrap md:flex-nowrap">
         <span class="text-gray-400">
-          {frontmatter.author}
+          huy {frontmatter.author}
         </span>
         <span class="text-gray-400">•</span>
         <time class="text-gray-400" datetime={frontmatter.publishDate}>
@@ -34,7 +34,6 @@ const { frontmatter } = Astro.props;
         </div>
       </div>
     </div>
-
     <div class="mx-auto prose prose-lg mt-6">
       <slot />
     </div>

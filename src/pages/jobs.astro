@@ -1,0 +1,29 @@
+---
+import { Image, Picture } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getCollection } from "astro:content";
+import googleLogo from "@/assets/logos/bun.svg";
+
+const jobs = await getCollection("jobs");
+---
+
+<PageLayout
+  title="Jobs"
+  description="We write about building startups and thoughts going on our mind.">
+  {
+    jobs.map(({ slug, data }) => (
+      <div class="flex mb-4">
+        <div class="mr-4">
+          <Image src={googleLogo} alt="Google Logo" class="max-w-8" />
+        </div>
+        <div>
+          <p class="text-lg font-bold">
+            <a href={`/jobs/${slug}`}>{data.title}</a>
+          </p>
+          <p class="text-gray-600">Description goes here...</p>
+        </div>
+      </div>
+    ))
+  }
+</PageLayout>
