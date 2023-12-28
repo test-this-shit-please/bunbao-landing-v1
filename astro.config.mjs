@@ -10,6 +10,9 @@ export default defineConfig({
   output: "server",
   site: "https://bunbao.sh",
   integrations: [tailwind(), mdx(), sitemap()],
+	devToolbar: {
+		enabled: false
+	},
   adapter: node({
     mode: "standalone"
   })
